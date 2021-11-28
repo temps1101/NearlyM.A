@@ -1,5 +1,5 @@
 from csv import reader
-from random import choice, sample, shuffle
+from random import choice, sample, shuffle, randint
 
 
 class Timeline:
@@ -55,3 +55,25 @@ class Timeline:
         shuffle(option_idc)
 
         return [no_time_overlap_timestamps[idx] for idx in option_idc]
+
+    def get_sort_tgt(self) -> list:
+        '''並び替え問題の候補を順序どうりにくれるメソッド
+
+        Returns:
+            list: ソートされた近い時期でまとまった並び替えようリスト
+            list: 上のものをランダムにシャッフルしたリスト
+        '''
+        last_idx = len(self.raw_timetable) - 1
+        center_idx = randint(0, last_idx)
+
+        if center_idx - 3 <= 0:
+            option_idc = list(range(7))
+        if center_idx + 4 >= last_idx:
+            option_idc = list(range(last_idx - 7, last_idx))
+        else:
+            option_idc = list(range(center_idx - 3, center_idx + 4))
+        option_idc.remove(center_idx)
+
+        option_idc = sample(option_idc, 4)
+
+        return [self.raw_timetable[idx] for idx in sorted(option_idc)], [self.raw_timetable[idx] for idx in option_idc]

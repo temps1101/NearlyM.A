@@ -45,12 +45,31 @@ def e2y_embed_maker(event: str, options: list) -> Embed:
         options (list): 選択肢が含まれたリスト
 
     Returns:
-        Embed: e2ey機能の問題を表示するときの埋め込み
+        Embed: e2y機能の問題を表示するときの埋め込み
     '''
     embed = Embed(title='M.A.だよ。', description='***問題：{}が起こった西暦OR時代を答えなさい。***'.format(event), color=0xff6a00)
     for i in range(4):
         choice_emoji = CHOICE_EMOJIS[i]
         embed.add_field(name=choice_emoji, value=options[i][0], inline=False)
     embed.set_footer(text="↓ここから選んだ記号を押してね↓")
+
+    return embed
+
+
+def s_embed_maker(timestamps: list):
+    '''s機能の問題を表示するときの埋め込みを取得するための関数
+
+    Args:
+        timestamps (str): 並び替えの候補
+
+    Returns:
+        Embed: s機能の問題を表示するときの埋め込み
+    '''
+    embed = Embed(title='M.A.だよ。', description='***問題：下の出来事を並び替えなさい。***', color=0xff6a00)
+    for i in range(4):
+        choice_emoji = CHOICE_EMOJIS[i]
+        embed.add_field(name=choice_emoji, value=timestamps[i][1], inline=False)
+
+    embed.set_footer(text="↓左から右へ時代が新しくなるように記号を並び替えてね！↓")
 
     return embed

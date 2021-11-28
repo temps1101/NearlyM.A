@@ -1,7 +1,7 @@
 from asyncio import TimeoutError
 from discord import Client
 
-from utils.message_embed import usage_embed_maker, y2e_embed_maker, e2y_embed_maker
+from utils.message_embed import usage_embed_maker, y2e_embed_maker, e2y_embed_maker, s_embed_maker
 from utils.timeline import Timeline
 
 
@@ -24,7 +24,7 @@ async def on_message(message):
         arg = message.content.split()
 
         if len(arg) == 1:
-            await message.channel.send(embed=usage_embed_maker())
+            await channel.send(embed=usage_embed_maker())
             return
 
         if arg[1].lower() == 'y2e':
@@ -52,7 +52,7 @@ async def on_message(message):
                     await channel.send('<@{}>！不正解です！正解は{}でした！'.format(user.id, CHOICE_EMOJIS[answer]))
             except TimeoutError:
                 await channel.send('時間切れですー！乙デェス')
-            
+
             return
 
         if arg[1].lower() == 'e2y':
@@ -84,7 +84,31 @@ async def on_message(message):
             return
 
         if arg[1].lower() == 's':
-            return
+            # 下準備
+            sort_tgt_timestamps, mixed_tgt_timestamps = timeline.get_sort_tgt()
+            answer = [mixed_tgt_timestamps.index(timestamp) for timestamp in sort_tgt_timestamps]
+            user_answer = list()
+
+            # 問題を埋め込みで表示
+            await channel.send(embed=s_embed_maker(mixed_tgt_timestamps))
+
+            # 並び替えの入力を受ける
+            def check(reaction, user):
+                return str(reaction.emoji) in CHOICE_EMOJIS
+            while len(user_answer) != 4:
+                try:
+                    reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
+                    if user == message.author:
+                        user_answer.append(CHOICE_EMOJIS.index(reaction.emoji))
+
+                except TimeoutError:
+                    await channel.send('時間切れですー！乙デェス')
+                    return
+
+            if user_answer == answer:
+                await channel.send('<@{}>！正解です！'.format(user.id))
+            else:
+                await channel.send('<@{}>！不正解です！正解は{}→{}→{}→{}でした！'.format(user.id, *[CHOICE_EMOJIS[idx] for idx in answer]))
 
 
 # BOTスターーとおおお！！
