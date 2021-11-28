@@ -13,6 +13,11 @@ timeline = Timeline(TIMELINE_DATA_PATH)
 
 
 @client.event
+async def on_ready():
+    print('スタートしました！')
+
+
+@client.event
 async def on_message(message):
     if message.content.startswith('/omaeda'):
         channel = message.channel
@@ -77,4 +82,3 @@ async def on_message(message):
 # BOTスターーとおおお！！
 TOKEN = input('M.A.が起きたぞおおお！！おはよお！Discord botのIDを教えてちょ！')
 client.run(TOKEN)
-print('スタートしました！')
