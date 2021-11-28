@@ -3,7 +3,7 @@ from threading import Thread
 import discord
 
 from timeline import Timeline
-from question_embedder import y2e_embed_maker
+from question_embedder import y2e_embed_maker, e2y_embed_maker
 
 
 TOKEN = ''
@@ -18,6 +18,10 @@ client = discord.Client()
 timeline = Timeline(TIMELINE_DATA_PATH)
 
 
+def check_reaction(reaction, user):
+                    return user == message.author and str(reaction.emoji) in ['\N{Regional Indicator Symbol Letter A}', '\N{Regional Indicator Symbol Letter B}', '\N{Regional Indicator Symbol Letter C}', '\N{Regional Indicator Symbol Letter D}']
+
+
 @client.event
 async def on_message(message):
     if message.content.startswith('/omaeda'):
@@ -29,7 +33,7 @@ async def on_message(message):
             year_event_pair = timeline.get_year_event_pair()
             suggestions = timeline.get_suggestions_from_year_event_pair(year_event_pair)
             question_message = await channel.send(embed=y2e_embed_maker(year_event_pair[0], suggestions))
-            answer =  suggestions.index(year_event_pair)
+            answer = suggestions.index(year_event_pair)
 
             for i in range(4):
                 await question_message.add_reaction(['\N{Regional Indicator Symbol Letter A}', '\N{Regional Indicator Symbol Letter B}', '\N{Regional Indicator Symbol Letter C}', '\N{Regional Indicator Symbol Letter D}'][i])
@@ -37,7 +41,7 @@ async def on_message(message):
             def check(reaction, user):
                 return user == message.author and str(reaction.emoji) in ['\N{Regional Indicator Symbol Letter A}', '\N{Regional Indicator Symbol Letter B}', '\N{Regional Indicator Symbol Letter C}', '\N{Regional Indicator Symbol Letter D}']
             try:
-                reaction, user = await client.wait_for('reaction_add', timeout=30.0, check=check)
+                reaction, user = await client.wait_for('reaction_add', timeout=30.0, check=check_reaction)
                 if ['\N{Regional Indicator Symbol Letter A}', '\N{Regional Indicator Symbol Letter B}', '\N{Regional Indicator Symbol Letter C}', '\N{Regional Indicator Symbol Letter D}'].index(reaction.emoji) == answer:
                     await channel.send('<@{}>！正解です！'.format(user.id))
                 else:
@@ -45,10 +49,26 @@ async def on_message(message):
             except asyncio.TimeoutError:
                 await channel.send('時間切れですー！乙デェス')
 
-    if arg.lower() == 'e2y':
-        year_event_pair = timeline.get_year_event_pair()
-        suggestions = timeline.get_suggestions_from_year_event_pair(year_event_pair)
+        if arg[1].lower() == 'e2y':
+            year_event_pair = timeline.get_year_event_pair()
+            suggestions = timeline.get_suggestions_from_year_event_pair(year_event_pair)
+            question_message = await channel.send(embed=e2y_embed_maker(year_event_pair[1], suggestions))
+            answer = suggestions.index(year_event_pair)
 
+            for i in range(4):
+                await question_message.add_reaction(['\N{Regional Indicator Symbol Letter A}', '\N{Regional Indicator Symbol Letter B}', '\N{Regional Indicator Symbol Letter C}', '\N{Regional Indicator Symbol Letter D}'][i])
+
+            for i in range(4):
+                await question_message.add_reaction(['\N{Regional Indicator Symbol Letter A}', '\N{Regional Indicator Symbol Letter B}', '\N{Regional Indicator Symbol Letter C}', '\N{Regional Indicator Symbol Letter D}'][i])
+
+                try:
+                    reaction, user = await client.wait_for('reaction_add', timeout=30.0, check=check_reaction)
+                    if ['\N{Regional Indicator Symbol Letter A}', '\N{Regional Indicator Symbol Letter B}', '\N{Regional Indicator Symbol Letter C}', '\N{Regional Indicator Symbol Letter D}'].index(reaction.emoji) == answer:
+                        await channel.send('<@{}>！正解です！'.format(user.id))
+                    else:
+                        await channel.send('<@{}>！不正解です！正解は{}でした！'.format(user.id, ['\N{Regional Indicator Symbol Letter A}', '\N{Regional Indicator Symbol Letter B}', '\N{Regional Indicator Symbol Letter C}', '\N{Regional Indicator Symbol Letter D}'][suggestions.index(year_event_pair)]))
+                except asyncio.TimeoutError:
+                    await channel.send('時間切れですー！乙デェス')
 
 # BOTスターーとおおお！！
 #job = Thread(target=client.run, args=(TOKEN,))
