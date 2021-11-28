@@ -4,7 +4,6 @@ from discord import Client
 from utils import Timeline, usage_embed_maker, y2e_embed_maker, e2y_embed_maker, CHOICE_EMOJIS
 
 
-TOKEN = ''
 TIMELINE_DATA_PATH = 'timeline_data.csv'
 
 client = Client()
@@ -74,4 +73,5 @@ async def on_message(message):
 
 
 # BOTスターーとおおお！！
+TOKEN = input('M.A.起きた！おはよお！Discord botのIDを教えてちょ！')
 client.run(TOKEN)
