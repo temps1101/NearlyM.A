@@ -1,10 +1,11 @@
 from asyncio import TimeoutError
 from discord import Client
 
-from utils import Timeline, usage_embed_maker, y2e_embed_maker, e2y_embed_maker, CHOICE_EMOJIS
+from utils import Timeline, usage_embed_maker, y2e_embed_maker, e2y_embed_maker
 
 
 TIMELINE_DATA_PATH = 'timeline_data.csv'
+CHOICE_EMOJIS: list = ['\N{Regional Indicator Symbol Letter A}', '\N{Regional Indicator Symbol Letter B}', '\N{Regional Indicator Symbol Letter C}', '\N{Regional Indicator Symbol Letter D}']  # [🇦, 🇧, 🇨, 🇩]
 
 client = Client()
 timeline = Timeline(TIMELINE_DATA_PATH)
