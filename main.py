@@ -1,7 +1,8 @@
 from asyncio import TimeoutError
 from discord import Client
 
-from utils import Timeline, usage_embed_maker, y2e_embed_maker, e2y_embed_maker
+from utils.message_embed import usage_embed_maker, y2e_embed_maker, e2y_embed_maker
+from utils.timeline import Timeline
 
 
 TIMELINE_DATA_PATH = 'timeline_data.csv'

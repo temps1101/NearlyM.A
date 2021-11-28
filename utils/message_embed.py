@@ -1,5 +1,7 @@
 from discord import Embed
-from . import CHOICE_EMOJIS
+
+
+CHOICE_EMOJIS: list = ['\N{Regional Indicator Symbol Letter A}', '\N{Regional Indicator Symbol Letter B}', '\N{Regional Indicator Symbol Letter C}', '\N{Regional Indicator Symbol Letter D}']  # [🇦, 🇧, 🇨, 🇩]
 
 
 def usage_embed_maker() -> Embed:
