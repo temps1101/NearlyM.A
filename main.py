@@ -40,7 +40,7 @@ async def on_message(message):
 
             try:
                 reaction, user = await client.wait_for('reaction_add', timeout=30.0, check=check)
-                if CHOICE_EMOJIS.index(reaction.emoji) == answer:
+                if user == message.author and CHOICE_EMOJIS.index(reaction.emoji) == answer:
                     await channel.send('<@{}>！正解です！'.format(user.id))
                 else:
                     await channel.send('<@{}>！不正解です！正解は{}でした！'.format(user.id, CHOICE_EMOJIS[answer]))
@@ -66,7 +66,7 @@ async def on_message(message):
 
             try:
                 reaction, user = await client.wait_for('reaction_add', timeout=30.0, check=check)
-                if CHOICE_EMOJIS.index(reaction.emoji) == answer:
+                if user == message.author and CHOICE_EMOJIS.index(reaction.emoji) == answer:
                     await channel.send('<@{}>！正解です！'.format(user.id))
                 else:
                     await channel.send('<@{}>！不正解です！正解は{}でした！'.format(user.id, CHOICE_EMOJIS[answer]))
