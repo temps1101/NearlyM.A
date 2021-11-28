@@ -75,5 +75,6 @@ async def on_message(message):
 
 
 # BOTスターーとおおお！！
-TOKEN = input('M.A.起きた！おはよお！Discord botのIDを教えてちょ！')
+TOKEN = input('M.A.が起きたぞおおお！！おはよお！Discord botのIDを教えてちょ！')
 client.run(TOKEN)
+print('スタートしました！')
