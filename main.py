@@ -6,7 +6,7 @@ from timeline import Timeline
 from question_embedder import y2e_embed_maker
 
 
-TOKEN = 'OTE0MzQyNjMyNDgwNzA2NTYw.YaLp7w.oAKgMeEt96Re9qN2nuQF_fyZeYc'
+TOKEN = ''
 TIMELINE_DATA_PATH = 'timeline_data.csv'
 
 HELP_EMBED = discord.Embed(title="M.A.だよ。", description="コマンド一覧を教えてあげるー！", color=0xff6a00)
