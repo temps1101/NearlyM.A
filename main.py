@@ -78,6 +78,9 @@ async def on_message(message):
             except TimeoutError:
                 await channel.send('時間切れですー！乙デェス')
 
+        if arg[1].lower() == 's':
+            pass
+
 
 # BOTスターーとおおお！！
 TOKEN = input('M.A.が起きたぞおおお！！おはよお！Discord botのIDを教えてちょ！')

@@ -13,7 +13,7 @@ def usage_embed_maker() -> Embed:
     embed = Embed(title="M.A.だよ。", description="コマンド一覧を教えてあげるー！", color=0xff6a00)
     embed.add_field(name="/omaeda y2e", value="その時代に起こった出来事を答える問題を出す。", inline=False)
     embed.add_field(name="/omaeda e2y", value="出来事が起こった時代を応える問題を出す", inline=False)
-    embed.add_field(name="/omaeda o", value="四つの選択肢を年代順に並べる問題を出す。ABCDを順番にリアクションしてね。", inline=False)
+    embed.add_field(name="/omaeda s", value="四つの選択肢を年代順に並べる問題を出す。ABCDを順番にリアクションしてね。", inline=False)
 
     return embed
 
