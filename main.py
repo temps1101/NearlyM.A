@@ -25,6 +25,7 @@ async def on_message(message):
 
         if len(arg) == 1:
             await message.channel.send(embed=usage_embed_maker())
+            return
 
         if arg[1].lower() == 'y2e':
             # 下準備
@@ -51,6 +52,8 @@ async def on_message(message):
                     await channel.send('<@{}>！不正解です！正解は{}でした！'.format(user.id, CHOICE_EMOJIS[answer]))
             except TimeoutError:
                 await channel.send('時間切れですー！乙デェス')
+            
+            return
 
         if arg[1].lower() == 'e2y':
             # 下準備
@@ -78,8 +81,10 @@ async def on_message(message):
             except TimeoutError:
                 await channel.send('時間切れですー！乙デェス')
 
+            return
+
         if arg[1].lower() == 's':
-            pass
+            return
 
 
 # BOTスターーとおおお！！
