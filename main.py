@@ -1,5 +1,5 @@
 from asyncio import TimeoutError
-import sys
+from os import getenv
 
 from discord import Client
 
@@ -113,8 +113,4 @@ async def on_message(message):
                 await channel.send('<@{}>！不正解です！正解は{}→{}→{}→{}でした！'.format(user.id, *[CHOICE_EMOJIS[idx] for idx in answer]))
 
 
-if __name__ == '__main__':
-    if len(sys.argv) == 2:
-        client.run(sys.argv[1])
-    else:
-        raise ValueError('`python main.py [TOKEN]`の形に沿うようにファイルを実行してください！')
+client.run(getenv('DISCORD_BOT_TOKEN'))
