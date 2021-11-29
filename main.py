@@ -1,4 +1,6 @@
 from asyncio import TimeoutError
+import sys
+
 from discord import Client
 
 from utils.message_embed import usage_embed_maker, y2e_embed_maker, e2y_embed_maker, s_embed_maker
@@ -111,6 +113,8 @@ async def on_message(message):
                 await channel.send('<@{}>！不正解です！正解は{}→{}→{}→{}でした！'.format(user.id, *[CHOICE_EMOJIS[idx] for idx in answer]))
 
 
-# BOTスターーとおおお！！
-TOKEN = input('M.A.が起きたぞおおお！！おはよお！Discord botのIDを教えてちょ！')
-client.run(TOKEN)
+if __name__ == '__main__':
+    if len(sys.argv) == 2:
+        client.run(sys.argv[1])
+    else:
+        raise ValueError('`python main.py [TOKEN]`の形に沿うようにファイルを実行してください！')
