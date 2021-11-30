@@ -44,11 +44,11 @@ async def on_message(message):
 
             # 選択ボタンを押すのを待ち、処理をする
             def check(reaction, user):
-                return str(reaction.emoji) in CHOICE_EMOJIS
+                return user == message.author and str(reaction.emoji) in CHOICE_EMOJIS
 
             try:
                 reaction, user = await client.wait_for('reaction_add', timeout=30.0, check=check)
-                if user == message.author and CHOICE_EMOJIS.index(reaction.emoji) == answer:
+                if CHOICE_EMOJIS.index(reaction.emoji) == answer:
                     await channel.send('<@{}>！正解です！'.format(user.id))
                 else:
                     await channel.send('<@{}>！不正解です！正解は{}でした！'.format(user.id, CHOICE_EMOJIS[answer]))
@@ -72,11 +72,11 @@ async def on_message(message):
 
             # 選択ボタンを押すのを待ち、処理をする
             def check(reaction, user):
-                return str(reaction.emoji) in CHOICE_EMOJIS
+                return user == message.author and str(reaction.emoji) in CHOICE_EMOJIS
 
             try:
                 reaction, user = await client.wait_for('reaction_add', timeout=30.0, check=check)
-                if user == message.author and CHOICE_EMOJIS.index(reaction.emoji) == answer:
+                if CHOICE_EMOJIS.index(reaction.emoji) == answer:
                     await channel.send('<@{}>！正解です！'.format(user.id))
                 else:
                     await channel.send('<@{}>！不正解です！正解は{}でした！'.format(user.id, CHOICE_EMOJIS[answer]))
@@ -96,12 +96,11 @@ async def on_message(message):
 
             # 並び替えの入力を受ける
             def check(reaction, user):
-                return str(reaction.emoji) in CHOICE_EMOJIS
+                return user == message.author and str(reaction.emoji) in CHOICE_EMOJIS
             while len(user_answer) != 4:
                 try:
                     reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
-                    if user == message.author:
-                        user_answer.append(CHOICE_EMOJIS.index(reaction.emoji))
+                    user_answer.append(CHOICE_EMOJIS.index(reaction.emoji))
 
                 except TimeoutError:
                     await channel.send('時間切れですー！乙デェス')
